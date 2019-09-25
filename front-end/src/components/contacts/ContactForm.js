@@ -42,7 +42,7 @@ const ContactForm = () => {
       updateContact(contact);
       clearCurrent();
     }else{
-      contactContext.addContact(contact);
+      addContact(contact);
       setContact({
         name: '',
         email: '',
