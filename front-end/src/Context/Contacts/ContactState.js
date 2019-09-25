@@ -17,8 +17,7 @@ import {
 
 const ContactState = props => {
   const initialState = {
-    contacts: [
-    ],
+    contacts: null,
     current: null,
     filtered: null,
     error: null
@@ -28,8 +27,13 @@ const ContactState = props => {
 
   // ----------------ACTIONS----------------
 
-  //GET CONTACTS
+  const clearContacts = () => {
+    dispatch({
+      type: CLEAR_CONTACTS
+    })
+  }
   const getContacts = async () => {
+  //GET CONTACTS
 
     try {
       const res = await axios.get('/api/contacts/');
@@ -65,12 +69,24 @@ const ContactState = props => {
       })
     }
   }
+
+  //UPDATE CONTACT
+
   // DELETE CONTACT
-  const deleteContact = id => {
-    dispatch({
-      type: DELETE_CONTACT,
-      payload: id
-    })
+  const deleteContact = async id => {
+    try {
+      const res = await axios.delete(`/api/contacts/${id}`);
+      dispatch({
+        type: DELETE_CONTACT,
+        payload: id
+      })
+    } catch (error) {
+      dispatch({
+        type: CONTACT_ERROR
+      })
+      console.log(error.response.msg);
+    }
+    
   }
   // SET CURRENT CONTACT
   const setCurrent = contact => {
@@ -86,11 +102,25 @@ const ContactState = props => {
     })
   }
   // UPDATE CONTACT
-  const updateContact = contact => {
-    dispatch({
-      type: UPDATE_CONTACT,
-      payload: contact
-    })
+  const updateContact = async contact => {
+    const config = {
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    }
+
+    try {
+      const res = await axios.put(`/api/contacts/${contact._id}`, contact, config);
+      dispatch({ 
+        type: UPDATE_CONTACT, 
+        payload: res.data
+      })
+    } catch (error) {
+      dispatch({ 
+        type: CONTACT_ERROR, 
+        error: error.response.msg
+      })
+    }
   }
   // FILTER CONTACTS
   const filterContacts = text => {
@@ -118,7 +148,8 @@ const ContactState = props => {
       clearCurrent,
       updateContact,
       filterContacts,
-      clearFilter
+      clearFilter,
+      clearContacts
     }}>
       {props.children}
     </ContactContext.Provider>

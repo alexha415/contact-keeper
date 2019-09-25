@@ -14,7 +14,7 @@ const Contacts = () => {
     // es-lint-disable-next-line
   },[]);
 
-  if(contacts.length === 0){
+  if(contacts && contacts.length === 0){
     return <h4>Please a contact</h4>
   }
 

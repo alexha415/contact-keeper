@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://almondjoys:icecream@contact-keeper-hw0yv.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret": "secret"
+  }
