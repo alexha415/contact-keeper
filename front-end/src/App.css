@@ -396,7 +396,7 @@ table th {
   opacity: 1;
 }
 .item-exit-active {
-  opacity: 0;
+  opacity: 0.01;
   transition: opacity 1000ms ease-in;
 }
 
