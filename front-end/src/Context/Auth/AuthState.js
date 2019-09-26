@@ -17,9 +17,9 @@ import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = props => {
   const initialState = {
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem("token"),
     isAuthenticated: false,
-    loading: false,
+    loading: true,
     user: null,
     error: null
   }
@@ -40,13 +40,9 @@ const AuthState = props => {
       })
     } catch (error) {
       dispatch({
-        type: AUTH_ERROR,
-        payload: error.response.data.msg
+        type: AUTH_ERROR
       })
     }
-  }
-  if(localStorage.getItem('token')){
-    loadUser();
   }
   // REGISTER USER
   const register = async formData => {
